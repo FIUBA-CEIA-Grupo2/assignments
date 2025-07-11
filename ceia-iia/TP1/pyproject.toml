@@ -1,7 +1,13 @@
 [project]
 name = "tp1"
 version = "0.1.0"
-description = "Add your description here"
+description = "Este trabajo práctico implementa una solución al problema clásico de la Torre de Hanoi utilizando el algoritmo de búsqueda A*. La implementación se encuentra en el notebook `TP1_hanoi_tower_problem.ipynb`"
 readme = "README.md"
 requires-python = ">=3.11"
-dependencies = []
+dependencies = [
+    "jupyter>=1.0.0",
+    "ipykernel>=6.0.0",
+    "notebook>=7.0.0",
+    "numpy>=1.24.0",
+    "matplotlib>=3.7.0"
+]
