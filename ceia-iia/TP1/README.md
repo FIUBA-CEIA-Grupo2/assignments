@@ -96,5 +96,10 @@ Para ejecutar el notebook `TP1_hanoi_tower_problem.ipynb`, siga estos pasos:
 7. Ejecute todas las celdas en orden
 
 ### Autores
-- Nombre:
-- Email:
+- Martín Fernando Andres
+- María Belén Cattaneo
+- Nicolas Ciarrapico
+- Maira Daniela Ferrari
+- Gaspar Rivollier 
+
+<!-- revisemos por las dudas que los saque del usuario del user de github. @gasparrivollier  -->
