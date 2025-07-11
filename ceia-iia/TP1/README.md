@@ -48,7 +48,7 @@ Se implementó el algoritmo de búsqueda A* (A-estrella) con dos heurísticas di
      c) Orden incorrecto: Penaliza cuando los discos no están en orden correcto
      d) Peso por tamaño: Añade peso adicional basado en el tamaño del disco
 
-La heurística multifactorial demostró ser más eficiente, reduciendo en un 22.2% el número de nodos explorados mientras mantiene la optimalidad de la solución. Es admisible (nunca sobreestima el costo real) y consistente (el valor entre nodos adyacentes nunca excede el costo real del movimiento).
+La heurística multifactorial demostró ser más eficiente, reduciendo en un 13.5% el número de nodos explorados mientras mantiene la optimalidad de la solución. Es admisible (nunca sobreestima el costo real) y consistente (el valor entre nodos adyacentes nunca excede el costo real del movimiento).
 
 El algoritmo utiliza estructuras de datos optimizadas:
 - Cola de prioridad para la frontera
