@@ -1,7 +1,7 @@
 import copy
 from typing import Optional
 
-import aima_libs.aima as aima
+import aima.aima as aima
 
 
 def is_sorted(test_list: list) -> bool:
