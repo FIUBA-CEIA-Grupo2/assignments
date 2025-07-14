@@ -1,4 +1,4 @@
-### Ejecución del Notebook
+## Ejecución del Notebook
 
 Para ejecutar el notebook `TP1_hanoi_tower_problem.ipynb`, siga estos pasos:
 
