@@ -7,6 +7,10 @@ src_path = project_root / "src"
 if str(src_path) not in sys.path:
     sys.path.insert(0, str(src_path))
 
+src_path = project_root / "libs"
+if str(src_path) not in sys.path:
+    sys.path.insert(0, str(src_path))
+
 from utils import compare_heuristics, get_execution_time_and_memory_usage
 
 if __name__ == "__main__":
