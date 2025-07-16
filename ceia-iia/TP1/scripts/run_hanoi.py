@@ -12,9 +12,10 @@ if str(src_path) not in sys.path:
     sys.path.insert(0, str(src_path))
 
 from utils import compare_heuristics, get_execution_time_and_memory_usage
+from validation import validate_files
 
 if __name__ == "__main__":
-    solution, stats = compare_heuristics(disks_num=5, debug=True)
+    solution, stats = compare_heuristics(disks_num=5, debug=False)
     output_dir = Path(__file__).resolve().parent / "data/output"
     Path(output_dir).mkdir(parents=True, exist_ok=True)
 
@@ -32,3 +33,5 @@ if __name__ == "__main__":
     print(f"Tiempo promedio: {t_stats[0]:.4f}s ± {t_stats[1]:.4f}")
     print(f"Memoria promedio: {m_stats[0]:.4f}MB ± {m_stats[1]:.4f}")
     print(f"Promedio de movimientos: {movs}")
+
+    _ = validate_files(output_dir)

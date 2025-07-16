@@ -37,7 +37,7 @@ def compare_heuristics(disks_num: int = 5, debug: bool = False) -> Tuple[NodeHan
         logger.info(f"  - Tiempo: {stats_multifactor['tiempo_ejecucion']:.4f} segundos")
 
     # Análisis comparativo
-    logger.info("\n" + "=" * 50)
+    logger.info("=" * 50)
     logger.info("ANÁLISIS COMPARATIVO")
     logger.info("=" * 50)
 
