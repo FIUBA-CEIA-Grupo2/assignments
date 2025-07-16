@@ -1,6 +1,6 @@
-## Ejecución del Notebook
+## Ejecución del Script
 
-Para ejecutar el notebook `TP1_hanoi_tower_problem.ipynb`, siga estos pasos:
+Para ejecutar el script `run_hanoi.py`, siga estos pasos:
 
 1. Asegúrese de tener instalado Python 3.11 o superior :
     ```bash
@@ -13,9 +13,7 @@ Para ejecutar el notebook `TP1_hanoi_tower_problem.ipynb`, siga estos pasos:
    ```bash
    uv sync
    ```
-6. Inicie Jupyter Notebook:
+6. Ejecute el script:
    ```bash
-   uv run jupyter notebook
+   python3 ./scripts/run_hanoi.py
    ```
-7. Abra el archivo `notebooks/hanoi_tower_problem.ipynb`
-8. Ejecute todas las celdas en orden

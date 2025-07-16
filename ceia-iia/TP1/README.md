@@ -17,4 +17,8 @@
 
 ### Como correrlo
 
+El presente proyecto tiene 2 modos de ejecución disponibles:
+
 [Como correr la notebook de Jupiter](notebooks/README.md)
+
+[Como correr el script](scripts/README.md)
