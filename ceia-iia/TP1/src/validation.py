@@ -5,7 +5,7 @@ import logging
 logging.basicConfig(level=logging.INFO, format='%(message)s')
 logger = logging.getLogger(__name__)
 
-def validate_files() -> bool:
+def validate_files(output_path: str) -> bool:
     """
     Valida que los archivos generados tengan el formato correcto.
     """
@@ -13,7 +13,7 @@ def validate_files() -> bool:
     # 1. Validar initial_state.json
     logger.info("1. Validando initial_state.json...")
     try:
-        with open('../data/input/initial_state.json', 'r', encoding='utf-8') as archivo:
+        with open(f'{output_path}/initial_state.json', 'r', encoding='utf-8') as archivo:
             initial_state = json.load(archivo)
 
         # Verificar estructura
@@ -55,7 +55,7 @@ def validate_files() -> bool:
     # 2. Validar sequence.json
     logger.info("2. Validando sequence.json...")
     try:
-        with open('../data/input/sequence.json', 'r', encoding='utf-8') as archivo:
+        with open(f'{output_path}/sequence.json', 'r', encoding='utf-8') as archivo:
             sequence = json.load(archivo)
 
         # Verificar que sea una lista
