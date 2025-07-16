@@ -1,4 +1,4 @@
-## 🧠 Ejecución de la notebook
+## 🧠 Ejecución del script
 
 Para ejecutar el notebook `scripts/hanoi_tower_problem.py`, siga los siguientes pasos:
 
