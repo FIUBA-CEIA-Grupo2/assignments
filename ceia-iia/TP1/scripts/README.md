@@ -1,6 +1,6 @@
 ## 🧠 Ejecución del script
 
-Para ejecutar el notebook `scripts/hanoi_tower_problem.py`, siga los siguientes pasos:
+Para ejecutar el script `scripts/hanoi_tower_problem.py`, siga los siguientes pasos:
 
 1. **Asegurese de tener instalado Python 3.11 o superior**:
 
