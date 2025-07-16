@@ -88,5 +88,5 @@ def validate_files(output_path: str) -> bool:
         logger.error("   ✗ Error al decodificar sequence.json")
         return False
 
-    logger.info("\n🎉 Ambos archivos son válidos!")
+    logger.info("🎉 Ambos archivos son válidos!")
     return True
