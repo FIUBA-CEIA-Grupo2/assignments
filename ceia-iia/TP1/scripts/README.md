@@ -1,19 +1,46 @@
-## Ejecución del Script
+## 🧠 Ejecución de la notebook
 
-Para ejecutar el script `run_hanoi.py`, siga estos pasos:
+Para ejecutar el notebook `scripts/hanoi_tower_problem.py`, siga los siguientes pasos:
 
-1. Asegúrese de tener instalado Python 3.11 o superior :
-    ```bash
-    python3 --version
-    ```
-2. Clone este repositorio
-3. Navegue hasta el directorio del proyecto
-4. Active el entorno virtual (`source .venv/bin/activate` en Linux/macOS o `.\.venv\Scripts\activate` en Windows).
-5. Instale las dependencias necesarias:
+1. **Asegurese de tener instalado Python 3.11 o superior**:
+
    ```bash
+   python3 --version
+   ```
+
+2. **Clone este repositorio**:
+
+   ```bash
+   git clone https://github.com/FIUBA-CEIA-Grupo2/assignments.git
+   cd assignments
+   ```
+
+3. **Instale `uv` si no lo tiene aun instalado**:
+
+   ```bash
+   curl -Ls https://astral.sh/uv/install.sh | bash
+   ```
+
+4. **Instale las dependencias y cree el entorno virtual**:
+
+   ```bash
+   uv venv
    uv sync
    ```
-6. Ejecute el script:
+
+5. **Active el entorno virtual**:
+
+   - En Linux/macOS:
+     ```bash
+     source .venv/bin/activate
+     ```
+   - En Windows:
+     ```powershell
+     .\.venv\Scripts\activate
+     ```
+
+6. **Ejecute el Script**:
+
    ```bash
-   python3 ./scripts/run_hanoi.py
+   python3 ./scripts/hanoi_tower_problem.py
    ```

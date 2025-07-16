@@ -1,21 +1,50 @@
-## Ejecución del Notebook
+## 🧠 Ejecución de la notebook
 
-Para ejecutar el notebook `TP1_hanoi_tower_problem.ipynb`, siga estos pasos:
+Para ejecutar el notebook `notebooks/hanoi_tower_problem.ipynb`, siga los siguientes pasos:
 
-1. Asegúrese de tener instalado Python 3.11 o superior :
-    ```bash
-    python3 --version
-    ```
-2. Clone este repositorio
-3. Navegue hasta el directorio del proyecto
-4. Active el entorno virtual (`source .venv/bin/activate` en Linux/macOS o `.\.venv\Scripts\activate` en Windows).
-5. Instale las dependencias necesarias:
+1. **Asegurese de tener instalado Python 3.11 o superior**:
+
    ```bash
+   python3 --version
+   ```
+
+2. **Clone el repositorio**:
+
+   ```bash
+   git clone https://github.com/FIUBA-CEIA-Grupo2/assignments.git
+   cd assignments
+   ```
+
+3. **Instale `uv` si aun no lo tiene instalado**:
+
+   ```bash
+   curl -Ls https://astral.sh/uv/install.sh | bash
+   ```
+
+4. **Instale las dependencias y cree el entorno virtual**:
+
+   ```bash
+   uv venv
    uv sync
    ```
-6. Inicie Jupyter Notebook:
+
+5. **Active el entorno virtual**:
+
+   - En Linux/macOS:
+     ```bash
+     source .venv/bin/activate
+     ```
+   - En Windows:
+     ```powershell
+     .\.venv\Scripts\activate
+     ```
+
+6. **Inicie Jupyter Notebook**:
+
    ```bash
    uv run jupyter notebook
    ```
-7. Abra el archivo `notebooks/hanoi_tower_problem.ipynb`
-8. Ejecute todas las celdas en orden
+
+7. **Abra el archivo** `notebooks/hanoi_tower_problem.ipynb`.
+
+8. **Ejecute todas las celdas en orden** para correr el algoritmo.
