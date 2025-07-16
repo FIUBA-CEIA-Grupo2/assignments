@@ -9,7 +9,8 @@ dependencies = [
     "ipykernel>=6.0.0",
     "notebook>=7.0.0",
     "numpy>=1.24.0",
-    "matplotlib>=3.7.0"
+    "matplotlib>=3.7.0",
+    "loguru>=0.7.0"
 ]
 
 [tool.setuptools]

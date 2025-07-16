@@ -1,14 +1,10 @@
 import time
-import logging
 from typing import Tuple
 
 from aima.hanoi_states import ProblemHanoi, StatesHanoi
 from aima.tree_hanoi import NodeHanoi
 from aima.aima import PriorityQueue as AimaPriorityQueue
-
-# Configuración del logger
-logging.basicConfig(level=logging.INFO, format='%(message)s')
-logger = logging.getLogger(__name__)
+from core.logger import logger
 
 class TowerHanoiAStar:
     """

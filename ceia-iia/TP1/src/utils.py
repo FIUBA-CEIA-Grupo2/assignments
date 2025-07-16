@@ -1,4 +1,3 @@
-import logging
 from typing import List, Tuple
 import tracemalloc
 import statistics
@@ -6,10 +5,7 @@ import statistics
 from aima.hanoi_states import ProblemHanoi, StatesHanoi
 from aima.tree_hanoi import NodeHanoi
 from tower_hanoi_astar_solver import TowerHanoiAStar
-
-# Setup de logger
-logging.basicConfig(level=logging.INFO, format='%(message)s')
-logger = logging.getLogger(__name__)
+from core.logger import logger
 
 def compare_heuristics(disks_num: int = 5, debug: bool = False) -> Tuple[NodeHanoi, dict]:
     """Inicialización del problema"""

@@ -1,9 +1,5 @@
 import json
-import logging
-
-# Configuración del logger
-logging.basicConfig(level=logging.INFO, format='%(message)s')
-logger = logging.getLogger(__name__)
+from core.logger import logger
 
 def validate_files(output_path: str) -> bool:
     """
