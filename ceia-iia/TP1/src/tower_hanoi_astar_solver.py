@@ -72,7 +72,7 @@ class TowerHanoiAStar:
         correct_disks = len(node.state.rods[2])  # Discos en varilla C
         return self.disks_num - correct_disks
 
-    def a_star(self, use_multifactorial_heuristic: bool = True, debug: bool = False) -> Tuple[Optional[NodeHanoi], dict]:
+    def a_star(self, use_multifactorial_heuristic: bool = True) -> Tuple[Optional[NodeHanoi], dict]:
         """
         Implementación del algoritmo A*.
 
@@ -80,11 +80,10 @@ class TowerHanoiAStar:
             - Nodo final alcanzado
             - Diccionario con estadísticas del algoritmo
         """
-        if debug:
-            logger.info(f"Iniciando A* con heurística {'multifactorial' if use_multifactorial_heuristic else 'simple'}...")
-            logger.info(f"Estado inicial: {self.initial_state}")
-            logger.info(f"Estado objetivo: {self.goal_state}")
-            logger.info("-" * 60)
+        logger.debug(f"Iniciando A* con heurística {'multifactorial' if use_multifactorial_heuristic else 'simple'}...")
+        logger.debug(f"Estado inicial: {self.initial_state}")
+        logger.debug(f"Estado objetivo: {self.goal_state}")
+        logger.debug("-" * 60)
 
         start_time = time.time()
 

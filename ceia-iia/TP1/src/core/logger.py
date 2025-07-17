@@ -1,11 +1,11 @@
-from loguru import logger
+from loguru import logger as _logger
 import sys
 
-def configure_logger():
-    logger.remove()
+def configure_logger(log_level="INFO"):
+    _logger.remove()
     
-    logger.add(sys.stdout, level="INFO", format="<green>{time:HH:mm:ss}</green> | <level>{level}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan> - <level>{message}</level>")
+    _logger.add(sys.stdout, level=log_level, format="<green>{time:HH:mm:ss}</green> | <level>{level}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan> - <level>{message}</level>")
 
-    return logger
+    return _logger
 
 logger = configure_logger()
