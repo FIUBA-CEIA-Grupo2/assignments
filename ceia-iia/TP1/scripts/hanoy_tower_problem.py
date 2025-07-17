@@ -34,4 +34,4 @@ if __name__ == "__main__":
     print(f"Memoria promedio: {m_stats[0]:.4f}MB ± {m_stats[1]:.4f}")
     print(f"Promedio de movimientos: {movs}")
 
-    _ = validate_files(output_dir)
+    _ = validate_hanoi_simulator_files(output_dir)

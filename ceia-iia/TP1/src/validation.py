@@ -1,7 +1,7 @@
 import json
 from core.logger import logger
 
-def validate_files(output_path: str) -> bool:
+def validate_hanoi_simulator_files(output_path: str) -> bool:
     """
     Valida que los archivos generados tengan el formato correcto.
     """
@@ -9,8 +9,8 @@ def validate_files(output_path: str) -> bool:
     # 1. Validar initial_state.json
     logger.info("1. Validando initial_state.json...")
     try:
-        with open(f'{output_path}/initial_state.json', 'r', encoding='utf-8') as archivo:
-            initial_state = json.load(archivo)
+        with open(f'{output_path}/initial_state.json', 'r', encoding='utf-8') as initial_state_file:
+            initial_state = json.load(initial_state_file)
 
         # Verificar estructura
         required_keys = ['peg_1', 'peg_2', 'peg_3']
@@ -25,17 +25,17 @@ def validate_files(output_path: str) -> bool:
                 return False
 
         # Validar discos
-        todos_discos = []
+        all_disks = []
         for peg in ['peg_1', 'peg_2', 'peg_3']:
-            todos_discos.extend(initial_state[peg])
+            all_disks.extend(initial_state[peg])
 
         # Verificar discos únicos
-        if len(todos_discos) != len(set(todos_discos)):
+        if len(all_disks) != len(set(all_disks)):
             logger.error("   ✗ Hay discos duplicados")
             return False
 
         # Verificar secuencia completa
-        if todos_discos and (set(todos_discos) != set(range(1, max(todos_discos) + 1))):
+        if all_disks and (set(all_disks) != set(range(1, max(all_disks) + 1))):
             logger.error("   ✗ Secuencia de discos incompleta")
             return False
 
@@ -51,8 +51,8 @@ def validate_files(output_path: str) -> bool:
     # 2. Validar sequence.json
     logger.info("2. Validando sequence.json...")
     try:
-        with open(f'{output_path}/sequence.json', 'r', encoding='utf-8') as archivo:
-            sequence = json.load(archivo)
+        with open(f'{output_path}/sequence.json', 'r', encoding='utf-8') as sequence_file:
+            sequence = json.load(sequence_file)
 
         # Verificar que sea una lista
         if not isinstance(sequence, list):
@@ -60,23 +60,23 @@ def validate_files(output_path: str) -> bool:
             return False
 
         # Validar cada movimiento
-        for i, move in enumerate(sequence):
+        for idx, move in enumerate(sequence):
             if not isinstance(move, dict):
-                logger.error(f"   ✗ Movimiento {i} debe ser un objeto")
+                logger.error(f"   ✗ Movimiento {idx} debe ser un objeto")
                 return False
 
             required_move_keys = ['type', 'disk', 'peg_start', 'peg_end']
             if not all(key in move for key in required_move_keys):
-                logger.error(f"   ✗ Movimiento {i} incompleto")
+                logger.error(f"   ✗ Movimiento {idx} incompleto")
                 return False
 
             if move['type'] != 'movement':
-                logger.error(f"   ✗ Movimiento {i} debe tener type='movement'")
+                logger.error(f"   ✗ Movimiento {idx} debe tener type='movement'")
                 return False
 
             # Verificar que los números de varilla sean válidos
             if not (1 <= move['peg_start'] <= 3 and 1 <= move['peg_end'] <= 3):
-                logger.error(f"   ✗ Movimiento {i} tiene números de varilla inválidos")
+                logger.error(f"   ✗ Movimiento {idx} tiene números de varilla inválidos")
                 return False
 
         logger.info(f"   ✓ sequence.json válido ({len(sequence)} movimientos)")
