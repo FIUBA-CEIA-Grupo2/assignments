@@ -1,6 +1,5 @@
 import sys
 from pathlib import Path
-
 project_root = Path(__file__).resolve().parents[1]
 
 src_path = project_root / "src"
@@ -11,11 +10,15 @@ src_path = project_root / "libs"
 if str(src_path) not in sys.path:
     sys.path.insert(0, str(src_path))
 
+from core.logger import configure_logger
 from utils import compare_heuristics, get_execution_time_and_memory_usage
 from validation import validate_hanoi_simulator_files
 
 if __name__ == "__main__":
-    solution, stats = compare_heuristics(disks_num=5, debug=False)
+
+    configure_logger("INFO")
+
+    solution, stats = compare_heuristics(disks_num=5)
     output_dir = Path(__file__).resolve().parent / "data/output"
     Path(output_dir).mkdir(parents=True, exist_ok=True)
 

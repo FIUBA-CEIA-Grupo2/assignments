@@ -7,7 +7,7 @@ from aima.tree_hanoi import NodeHanoi
 from tower_hanoi_astar_solver import TowerHanoiAStar
 from core.logger import logger
 
-def compare_heuristics(disks_num: int = 5, debug: bool = False) -> Tuple[NodeHanoi, dict]:
+def compare_heuristics(disks_num: int = 5) -> Tuple[NodeHanoi, dict]:
     """Inicialización del problema"""
     disks_list = list(range(disks_num, 0, -1))
     initial_state = StatesHanoi(disks_list, [], [], max_disks=disks_num)
@@ -18,23 +18,23 @@ def compare_heuristics(disks_num: int = 5, debug: bool = False) -> Tuple[NodeHan
     tower = TowerHanoiAStar(initial_state, goal_state, problem, disks_num=disks_num)
     solution_simple, stats_simple = tower.a_star(use_multifactorial_heuristic=False)
 
-    if solution_simple and debug:
-        logger.info("\n1. HEURÍSTICA SIMPLE (discos fuera de lugar)")
-        logger.info(f"✓ Solución encontrada en {stats_simple['movimientos']} movimientos")
-        logger.info(f"  - Nodos explorados: {stats_simple['nodos_explorados']}")
-        logger.info(f"  - Nodos expandidos: {stats_simple['nodos_expandidos']}")
-        logger.info(f"  - Tiempo: {stats_simple['tiempo_ejecucion']:.4f} segundos")
+    if solution_simple:
+        logger.debug("\n1. HEURÍSTICA SIMPLE (discos fuera de lugar)")
+        logger.debug(f"✓ Solución encontrada en {stats_simple['movimientos']} movimientos")
+        logger.debug(f"  - Nodos explorados: {stats_simple['nodos_explorados']}")
+        logger.debug(f"  - Nodos expandidos: {stats_simple['nodos_expandidos']}")
+        logger.debug(f"  - Tiempo: {stats_simple['tiempo_ejecucion']:.4f} segundos")
 
     # Probar heurística multifactorial
     tower = TowerHanoiAStar(initial_state, goal_state, problem, disks_num=disks_num)
     solution_multifactor, stats_multifactor = tower.a_star(use_multifactorial_heuristic=True)
 
-    if solution_multifactor and debug:
-        logger.info("\n2. HEURÍSTICA MULTIFACTORIAL")
-        logger.info(f"✓ Solución encontrada en {stats_multifactor['movimientos']} movimientos")
-        logger.info(f"  - Nodos explorados: {stats_multifactor['nodos_explorados']}")
-        logger.info(f"  - Nodos expandidos: {stats_multifactor['nodos_expandidos']}")
-        logger.info(f"  - Tiempo: {stats_multifactor['tiempo_ejecucion']:.4f} segundos")
+    if solution_multifactor:
+        logger.debug("\n2. HEURÍSTICA MULTIFACTORIAL")
+        logger.debug(f"✓ Solución encontrada en {stats_multifactor['movimientos']} movimientos")
+        logger.debug(f"  - Nodos explorados: {stats_multifactor['nodos_explorados']}")
+        logger.debug(f"  - Nodos expandidos: {stats_multifactor['nodos_expandidos']}")
+        logger.debug(f"  - Tiempo: {stats_multifactor['tiempo_ejecucion']:.4f} segundos")
 
     # Análisis comparativo
     logger.info("=" * 50)
