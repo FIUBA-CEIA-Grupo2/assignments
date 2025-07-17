@@ -2,7 +2,11 @@
 
 ### Descripción de la Implementación
 
-Este trabajo práctico implementa una solución al problema clásico de la Torre de Hanoi utilizando el algoritmo de búsqueda A\*. La implementación se encuentra en el notebook `TP1_hanoi_tower_problem.ipynb` y presenta las siguientes características principales:
+Este trabajo práctico implementa una solución al problema clásico de la Torre de Hanoi utilizando el algoritmo de búsqueda A\*.
+
+La implementación se encuentra en la carpeta src y se puede ejecutar tanto desde la notebook `notebooks/hanoi_tower_problem.ipynb` como dede el script `scripts/hanoi_tower_problem.py`.
+
+El desarrollo tiene las siguientes características principales:
 
 - Implementación del algoritmo A\* con dos heurísticas diferentes
 - Manejo eficiente de estados y nodos de búsqueda
@@ -26,7 +30,7 @@ Este trabajo práctico implementa una solución al problema clásico de la Torre
 - **Episódico vs. Secuencial:** Episódico. Las partidas son individuales y no se afectan una a la otra. El escenario se resetea cada vez que se inicia una nueva partida.
 - **Estático vs. Dinámico:** Estático. El entorno no cambia más allá de los cambios generados por la propia acción del agente.
 - **Discreto vs. Continuo:** Discreto. Las acciones se pueden individualizar de forma discreta en movimientos de discos a varillas.
-- **Agente individual vs. Multiagente: Agente individual** Agente individual. Solo hay un agente operando en un mismo momento, no hay ni cooperación ni competencia. <!-- me entro la duda si al hacer la comparación de las dos heurísticas no estamos haciendo multiagente. entiendo que no porque no se hacen en el mismo momento digamos. -->
+- **Agente individual vs. Multiagente: Agente individual** Agente individual. Solo hay un agente operando en un mismo momento, no hay ni cooperación ni competencia.
 
 #### 3. Definición de conceptos
 
