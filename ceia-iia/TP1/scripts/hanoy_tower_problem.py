@@ -12,7 +12,7 @@ if str(src_path) not in sys.path:
     sys.path.insert(0, str(src_path))
 
 from utils import compare_heuristics, get_execution_time_and_memory_usage
-from validation import validate_files
+from validation import validate_hanoi_simulator_files
 
 if __name__ == "__main__":
     solution, stats = compare_heuristics(disks_num=5, debug=False)
