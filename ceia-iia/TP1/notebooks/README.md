@@ -12,7 +12,8 @@ Para ejecutar el notebook `notebooks/hanoi_tower_problem.ipynb`, siga los siguie
 
    ```bash
    git clone https://github.com/FIUBA-CEIA-Grupo2/assignments.git
-   cd assignments
+   cd assignments/ceia-iia/TP1
+
    ```
 
 3. **Instale `uv` si aun no lo tiene instalado**:

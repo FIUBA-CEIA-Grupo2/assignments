@@ -1,5 +1,5 @@
 import time
-from typing import Tuple
+from typing import Tuple, Optional
 
 from aima.hanoi_states import ProblemHanoi, StatesHanoi
 from aima.tree_hanoi import NodeHanoi
@@ -34,35 +34,35 @@ class TowerHanoiAStar:
         """
         # Factor 1: Discos que no están en la varilla objetivo (C)
         misplaced_disks = 0
-        for i in range(2):  # Varillas A y B
-            misplaced_disks += len(node.state.rods[i])
+        for source_rod_index in range(2):  # Varillas A y B
+            misplaced_disks += len(node.state.rods[source_rod_index])
 
         # Factor 2: Discos bloqueados en varillas incorrectas
         locked_disks = 0
-        for i in range(2):  # Solo varillas A y B
-            rod = node.state.rods[i]
-            for j, _ in enumerate(rod):
+        for source_rod_index in range(2):  # Solo varillas A y B
+            current_rod = node.state.rods[source_rod_index]
+            for disk_position, _ in enumerate(current_rod):
                 # Si hay discos encima, está bloqueado
-                if j < len(rod) - 1:
+                if disk_position < len(current_rod) - 1:
                     locked_disks += 1
 
         # Factor 3: Verificar orden en varilla objetivo
         incorrect_order = 0
-        rod_c = node.state.rods[2]
-        for i in range(len(rod_c)):
-            if rod_c[i] != self.disks_num - i:
+        target_rod = node.state.rods[2]
+        for source_rod_index  in range(len(target_rod)):
+            if target_rod[source_rod_index] != self.disks_num - source_rod_index:
                 incorrect_order += 1
 
         # Factor 4: Peso por tamaño de disco (discos más grandes son más costosos de mover)
         disks_weight = 0
-        for i in range(2):
-            for disk in node.state.rods[i]:
+        for source_rod_index in range(2):
+            for disk in node.state.rods[source_rod_index]:
                 disks_weight += disk * 0.1  # Pequeño peso adicional
 
         # Combinación de factores
-        h = misplaced_disks * 2 + locked_disks + incorrect_order + disks_weight
+        heuristic_score = misplaced_disks * 2 + locked_disks + incorrect_order + disks_weight
 
-        return int(h)
+        return int(heuristic_score)
 
     def simple_heuristic(self, node: NodeHanoi) -> int:
         """
@@ -72,7 +72,7 @@ class TowerHanoiAStar:
         correct_disks = len(node.state.rods[2])  # Discos en varilla C
         return self.disks_num - correct_disks
 
-    def a_star(self, use_multifactorial_heuristic: bool = True, debug: bool = False) -> Tuple[NodeHanoi, dict]:
+    def a_star(self, use_multifactorial_heuristic: bool = True, debug: bool = False) -> Tuple[Optional[NodeHanoi], dict]:
         """
         Implementación del algoritmo A*.
 
