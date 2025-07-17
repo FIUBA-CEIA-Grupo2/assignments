@@ -12,7 +12,7 @@ Para ejecutar el script `scripts/hanoi_tower_problem.py`, siga los siguientes pa
 
    ```bash
    git clone https://github.com/FIUBA-CEIA-Grupo2/assignments.git
-   cd assignments
+   cd assignments/ceia-iia/TP1
    ```
 
 3. **Instale `uv` si no lo tiene aun instalado**:
