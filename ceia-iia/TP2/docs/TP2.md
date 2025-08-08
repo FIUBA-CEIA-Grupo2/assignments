@@ -23,8 +23,9 @@ El target es:
 
 1. Obtener la correlación entre los atributos y entre los atributos y el target.
     1. ¿Qué atributo tiene mayor correlación lineal con el target?
-    ![Correlaciones de feature y target](../img/tp2_correlacion_target_features.png)
     El atributo con más correlación es **MedInc** (el ingreso medio en el bloque), seguido por bastante diferencia por **AveRooms** (Promedio de habitaciones por hogar) y luego **Latitude**. 
+
+        ![Correlaciones de feature y target](../img/tp2_correlacion_target_features.png)
     
     2. ¿Cuáles atributos parecen estar más correlacionados entre sí? Se pueden calcular los coeficientes de correlación o representarlos gráficamente mediante un mapa de calor.
     ![Mapa de calor de features](../img/tp2_heat_map.png)
@@ -46,12 +47,67 @@ El target es:
 
 3. Calcular una regresión lineal utilizando todos los atributos. 
     1. Con el conjunto de entrenamiento, calcular la varianza total de los datos y la varianza explicada por el modelo. 
-    2. ¿Está el modelo capturando adecuadamente el comportamiento del target? Fundamente su respuesta.
-4. Calcular las métricas de MSE, MAE y R² sobre el conjunto de evaluación.
-5. Crear una regresión de Ridge. 
-    1. Usar validación cruzada de 5 folds y tomar como métrica el MSE.
+        
+        Comparación de varianza:
+
+            Varianza total de los datos (TSS): 12458.51
+            Varianza residual (RSS): 5434.81
+            Varianza explicada por el modelo (ESS): 7023.69
+
+    1. ¿Está el modelo capturando adecuadamente el comportamiento del target? Fundamente su respuesta.
+        
+        Para comparar el comportamiento de la varianza del modelo respecto al target utilizamos el coeficiente de Pearson (R^2) que expresa la varianza explicada por el modelo respecto a la varianza total de los datos. 
+         - **Coeficiente de determinación (R^2)**: 0.5638
+        
+        Con un coeficiente R2 de 0.5638 podemos decir que el modelo no se ajusta correctamente a la varianza de los datos, explicando solo parcialmente estos. Se puede mejorar bastante. 
+
+1. Calcular las métricas de MSE, MAE y R² sobre el conjunto de evaluación.
+
+    El código y la obtención de las métricas se encuentra en el [notebook principal](../notebooks/california_housing_regression.ipynb)
+
+        Resultados para regresión lineal:
+        R²: 0.5953
+        MSE: 0.3697
+        MAE: 0.4602
+
+2. Crear una regresión de Ridge. 
+    1. Usar validación cruzada de 5 folds y tomar como métrica el MSE. 
+
+        Ejecutado en código en notebook.
+
     2. Buscar el mejor valor de α en el rango [0, 12.5].
+        
+            Mejor alpha: 6.6373
+            MSE promedio con mejor alpha: 0.5268
     3. Graficar el MSE en función de α.
-6. Comparar los resultados obtenidos entre la regresión lineal y la mejor regresión de Ridge, evaluando el conjunto de prueba.
+    ![grafico de alfa](../img/tp2_alpha_search.png)
+ 
+3. Comparar los resultados obtenidos entre la regresión lineal y la mejor regresión de Ridge, evaluando el conjunto de prueba.
     1. ¿Cuál de los dos modelos obtiene mejores resultados en términos de MSE y MAE? ¿Poseen suficiente diferencia como para indicar si uno es mejor que el otro?
+    
+        ![tabla de resultados](../img/tp2_result_comparison.png)
+        
+        Como se observa en la tabla, ambos modelos arrojan resultados similares. Si bien bastante superiores al baseline de comparación (media como aproximación), no presentan grandes diferencias entre ellos. 
+
     2. ¿Qué tipo de error podría haberse reducido?
+
+        El error que se debería reducir es el MSE, ya que la búsqueda de alfa consiste en buscar el punto en el que el error por varianza y el error por sesgo intersectan, dando un MSE mínimo. Se presenta una reducción, pero es mínima. 
+
+## Análisis adicional
+
+Con el fin de explorar una posibilidad de mejora del modelo se evalua que pasaría utilizando los modelos pero retirando los outliers del dataset antes de entrenarlo:
+
+![boxplot medhouse val](../img/tp2_boxplot_houseval.png)
+
+Retirando los outliers, cambiamos el dataset a: 
+
+    Cantidad con outliers: 20640
+    Cantidad sin outliers: 19569
+
+Con este nuevo dataset, entrenamos los modelos nuevamente, y lo ponemos a prueba contra el set de test: 
+
+![tabla de resultados adicional](../img/tp2_result_comparison_adicional.png)
+
+Con estos nuevos  modelos se reduce el MSE y MAE, probablemente porque, si recordamos la distribución de MedHouseVal, estamos reduciendo el impacto que tienen en la regresión los datos acumulados en el extremo superior de los valores. 
+
+Si bien esto reduce el error del modelo, empeoraría su capacidad de predecir estos precios extremos. 
