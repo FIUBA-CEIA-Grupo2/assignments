@@ -1,6 +1,6 @@
 ## 🧠 Ejecución de la notebook
 
-Para ejecutar el notebook `notebooks/hanoi_tower_problem.ipynb`, siga los siguientes pasos:
+Para ejecutar el notebook `notebooks/california_housing_regression.ipynb`, siga los siguientes pasos:
 
 1. **Asegurese de tener instalado Python 3.11 o superior**:
 
@@ -12,7 +12,7 @@ Para ejecutar el notebook `notebooks/hanoi_tower_problem.ipynb`, siga los siguie
 
    ```bash
    git clone https://github.com/FIUBA-CEIA-Grupo2/assignments.git
-   cd assignments/ceia-iia/TP1
+   cd assignments/ceia-iia/TP2
 
    ```
 
@@ -46,6 +46,6 @@ Para ejecutar el notebook `notebooks/hanoi_tower_problem.ipynb`, siga los siguie
    uv run jupyter notebook
    ```
 
-7. **Abra el archivo** `notebooks/hanoi_tower_problem.ipynb`.
+7. **Abra el archivo** `notebooks/california_housing_regression.ipynb`.
 
 8. **Ejecute todas las celdas en orden** para correr el algoritmo.

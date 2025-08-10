@@ -9,7 +9,7 @@
 
 ### Enunciado
 
-[Enunciado del trabajo practico](docs/enunciado.md)
+[Enunciado del trabajo práctico](docs/enunciado.md)
 
 ### Resolución
 
