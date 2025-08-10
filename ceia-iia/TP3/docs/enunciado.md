@@ -13,7 +13,7 @@ En este proceso, se contabiliza la cantidad de ocurrencias de cada palabra en lo
 Con el fin de preservar la privacidad de los mensajes, la frecuencia de palabras ha sido normalizada. El conjunto de datos está compuesto por 54 columnas de atributos denominadas:
 
 * `word_freq_XXXX`: donde **XXXX** representa una palabra o símbolo. Los valores son enteros que van de 0 a 20.000.
-Además, incluye una columna adicional llamada spam, que toma el valor 1 si el correo es SPAM, y 0 si no lo es.
+Además, incluye una columna adicional llamada `spam`, que toma el valor 1 si el correo es SPAM, y 0 si no lo es.
 
 Los clasificadores de Bayes ingenuos fueron de los primeros filtros utilizados por aplicaciones de correo electrónico, y se basan en este principio: partiendo de una probabilidad a priori de que un correo sea SPAM, ciertas palabras pueden modificar esa probabilidad a posteriori, sugiriendo si un mensaje tiene mayor o menor probabilidad de ser SPAM.
 
