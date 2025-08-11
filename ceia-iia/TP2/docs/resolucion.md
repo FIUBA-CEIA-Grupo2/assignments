@@ -9,7 +9,10 @@
 #### 1. Obtener la correlación entre los atributos y entre los atributos y el target.
 
 1. **¿Qué atributo tiene mayor correlación lineal con el target?** 
-    Los atributos que tienen mayor relacion con el target son MedInc, AveRooms, y Latitude. 
+    Los atributos con más correlación es **MedInc** (el ingreso medio en el bloque), seguido por bastante diferencia por **AveRooms** (Promedio de habitaciones por hogar) y luego **Latitude**. 
+
+        ![Correlaciones de feature y target](../img/tp2_correlacion_target_features.png)
+     
 2. **¿Cuáles atributos parecen estar más correlacionados entre sí? Se pueden calcular los coeficientes de correlación o representarlos gráficamente mediante un mapa de calor?** 
     Se pueden representar el mapa de calor a traves del cual se ven los atributos que estan mas correlacionados entre si:
     
@@ -22,13 +25,15 @@
     MedInc y AveRooms -> 0.33: Similar al caso anterior a mayor ingreso mayor numero de habitaciones
     Population y HouseAge -> -0.30: Zonas con casas más antiguas suelen tener menor población (o viceversa).
 
+    Podemos además ver estas distribuciones en un pairplot: 
+    ![Pairplot de features](../img/tp2_pairplot_kde.png)
 
 #### 2. Graficar los histogramas de los distintos atributos y del target. 
 
 ![Histogramas de Atributos](../img/tp2_histogramas.png)
 
 1. **¿Qué forma presentan los histogramas?** 
-    *MedInc:* Sesgo a la derecha (asimetría positiva): mayoría de observaciones en valores bajos-medios (2–6) y cola larga hacia ingresos altos, pocas zonas muy ricas elevan el extremo derecho.
+    *MedInc:* Sesgo a la derecha (asimetría positiva): mayoría de observaciones en valores bajos-medios (2–6) y cola larga hacia ingresos altos, pocas zonas muy ricas elevan el extremo derecho (outliers muy pronunciadoss).
     *HouseAge:* Distribución multimodal y algo más plana que una normal.
     *AveRooms:* Sesgo a la derecha muy pronunciado, con valores extremos altísimos (outliers), algunas zonas tienen promedios muy altos por viviendas poco comunes.
     *AveBedrms:* Distribución muy concentrada cerca de valores bajos (~1), con pocos outliers.
@@ -47,6 +52,7 @@
 1. **Con el conjunto de entrenamiento, calcular la varianza total de los datos y la varianza explicada por el modelo.** 
     Varianza total de los datos (TSS): 19355.93
     Varianza explicada por el modelo (ESS): 11794.46
+    Varianza residual (RSS): 7561.471021289253
 
 2. **¿Está el modelo capturando adecuadamente el comportamiento del target? Fundamente su respuesta.**
     Dadas la varianza total y la varinza explicada por el modelo podemos obtener el coeficiente de Pearson:
@@ -70,10 +76,13 @@
 #### 5. Crear una regresión de Ridge. 
 
 1. **Usar validación cruzada de 5 folds y tomar como métrica el MSE.**
+    Ejecutado en código en notebook.
+
 2. **Buscar el mejor valor de α en el rango [0, 12.5].**
+    Mejor alpha: 6.637
+
 3. **Graficar el MSE en función de α.**
 
-    Mejor alpha: 6.63734693877551
     MSE promedio con mejor alpha: 0.5268175785432091
     ![MSE vs α](../img/tp2_boxplot_houseval.png)
 
@@ -81,4 +90,30 @@
 #### 6. Comparar los resultados obtenidos entre la regresión lineal y la mejor regresión de Ridge, evaluando el conjunto de prueba.
 
 1. **Cuál de los dos modelos obtiene mejores resultados en términos de MSE y MAE? ¿Poseen suficiente diferencia como para indicar si uno es mejor que el otro?**
+    ![tabla de resultados](../img/tp2_result_comparison.png)
+        
+    Como se observa en la tabla, ambos modelos arrojan resultados similares. Si bien bastante superiores al baseline de comparación (media como aproximación), no presentan grandes diferencias entre ellos. 
+
 2. **¿Qué tipo de error podría haberse reducido?**
+    El error que se debería reducir es el MSE, ya que la búsqueda de alfa consiste en buscar el punto en el que el error por varianza y el error por sesgo intersectan, dando un MSE mínimo. Se presenta una reducción, pero es mínima. 
+
+
+
+## Análisis adicional
+
+Con el fin de explorar una posibilidad de mejora del modelo se evalua que pasaría utilizando los modelos pero retirando los outliers del dataset antes de entrenarlo:
+
+![boxplot medhouse val](../img/tp2_boxplot_houseval.png)
+
+Retirando los outliers, cambiamos el dataset a: 
+
+    Cantidad con outliers: 20640
+    Cantidad sin outliers: 19569
+
+Con este nuevo dataset, entrenamos los modelos nuevamente, y lo ponemos a prueba contra el set de test: 
+
+![tabla de resultados adicional](../img/tp2_result_comparison_adicional.png)
+
+Con estos nuevos  modelos se reduce el MSE y MAE, probablemente porque, si recordamos la distribución de MedHouseVal, estamos reduciendo el impacto que tienen en la regresión los datos acumulados en el extremo superior de los valores. 
+
+Si bien esto reduce el error del modelo, empeoraría su capacidad de predecir estos precios extremos. 
