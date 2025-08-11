@@ -11,7 +11,7 @@
 1. **¿Qué atributo tiene mayor correlación lineal con el target?** 
     Los atributos con más correlación es **MedInc** (el ingreso medio en el bloque), seguido por bastante diferencia por **AveRooms** (Promedio de habitaciones por hogar) y luego **Latitude**. 
 
-        ![Correlaciones de feature y target](../img/tp2_correlacion_target_features.png)
+    ![Correlaciones de feature y target](../img/tp2_correlacion_target_features.png)
      
 2. **¿Cuáles atributos parecen estar más correlacionados entre sí? Se pueden calcular los coeficientes de correlación o representarlos gráficamente mediante un mapa de calor?** 
     Se pueden representar el mapa de calor a traves del cual se ven los atributos que estan mas correlacionados entre si:
