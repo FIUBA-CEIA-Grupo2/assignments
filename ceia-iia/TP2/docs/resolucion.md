@@ -19,11 +19,15 @@
     ![Mapa de Calor](../img/tp2_heat_map.png)
 
 
-    Latitude y Longitude -> -0.92: Se da debido a la distribución en el mapa del estado de California. 
-    AveRooms y AveBedrms -> 0.85: Tampoco es casual ya que el AveBedrms esta directamente relacionado con el AveRooms, a mayor AveBedrms mayor AveRooms.
-    MedInc y MedHouseVal -> 0.69: Indica que a mayor ingredo medio mayor valor medio de la casa.
-    MedInc y AveRooms -> 0.33: Similar al caso anterior a mayor ingreso mayor numero de habitaciones
-    Population y HouseAge -> -0.30: Zonas con casas más antiguas suelen tener menor población (o viceversa).
+    *Latitude y Longitude* -> -0.92: Se da debido a la distribución en el mapa del estado de California. 
+
+    *AveRooms y AveBedrms* -> 0.85: Tampoco es casual ya que el AveBedrms esta directamente relacionado con el AveRooms, a mayor AveBedrms mayor AveRooms.
+
+    *MedInc y MedHouseVal* -> 0.69: Indica que a mayor ingredo medio mayor valor medio de la casa.
+
+    *MedInc y AveRooms* -> 0.33: Similar al caso anterior a mayor ingreso mayor numero de habitaciones.
+
+    *Population y HouseAge* -> -0.30: Zonas con casas más antiguas suelen tener menor población (o viceversa).
 
     Podemos además ver estas distribuciones en un pairplot: 
     ![Pairplot de features](../img/tp2_pairplot_kde.png)
@@ -33,13 +37,21 @@
 ![Histogramas de Atributos](../img/tp2_histogramas.png)
 
 1. **¿Qué forma presentan los histogramas?** 
+    
     *MedInc:* Sesgo a la derecha (asimetría positiva): mayoría de observaciones en valores bajos-medios (2–6) y cola larga hacia ingresos altos, pocas zonas muy ricas elevan el extremo derecho (outliers muy pronunciadoss).
+
     *HouseAge:* Distribución multimodal y algo más plana que una normal.
+
     *AveRooms:* Sesgo a la derecha muy pronunciado, con valores extremos altísimos (outliers), algunas zonas tienen promedios muy altos por viviendas poco comunes.
+
     *AveBedrms:* Distribución muy concentrada cerca de valores bajos (~1), con pocos outliers.
+
     *Population:* Alta asimetría positiva: muchas zonas con poca población, pero hay unas pocas muy densos.
+
     *AveOccup:* Muy sesgada a la derecha: muchas zonas con ocupación baja (~2–4), pero hay casos extremos.
+
     *MedHouseVal:* Sesgo a la derecha, aunque menos extremo que ingresos.
+
     *Latitude y Longitude:* Reflejan la distribución geográfica del dataset (picos en ubicaciones concretas, como ciudades grandes).
 
 
@@ -84,12 +96,14 @@
 3. **Graficar el MSE en función de α.**
 
     MSE promedio con mejor alpha: 0.5268175785432091
-    ![MSE vs α](../img/tp2_boxplot_houseval.png)
+    
+    ![MSE vs α](../img/tp2_alpha_search.png)
 
 
 #### 6. Comparar los resultados obtenidos entre la regresión lineal y la mejor regresión de Ridge, evaluando el conjunto de prueba.
 
 1. **Cuál de los dos modelos obtiene mejores resultados en términos de MSE y MAE? ¿Poseen suficiente diferencia como para indicar si uno es mejor que el otro?**
+    
     ![tabla de resultados](../img/tp2_result_comparison.png)
         
     Como se observa en la tabla, ambos modelos arrojan resultados similares. Si bien bastante superiores al baseline de comparación (media como aproximación), no presentan grandes diferencias entre ellos. 
