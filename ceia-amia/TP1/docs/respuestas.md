@@ -14,8 +14,17 @@ En esta sección nos vamos a ocupar de hacer que el modelo sea más rápido para
 
 ### 1) Diferencias entre `QDA`y `TensorizedQDA`
 
-1. ¿Sobre qué paraleliza `TensorizedQDA`? ¿Sobre las $k$ clases, las $n$ observaciones a predecir, o ambas?
-2. Analizar los shapes de `tensor_inv_covs` y `tensor_means` y explicar paso a paso cómo es que `TensorizedQDA` llega a predecir lo mismo que `QDA`.
+1. **¿Sobre qué paraleliza `TensorizedQDA`? ¿Sobre las $k$ clases, las $n$ observaciones a predecir, o ambas?**
+
+    Paraleliza sobre las k clases, porque a pesar de formar un tensor de dimensiones $(k, p, p)$ para la matriz de covarianzas y uno de $(k, p, 1)$ para el tensor de medias de las features, de todas formas cada observación se evalua individualmente con el método `_predict_one`.
+
+2. **Analizar los shapes de `tensor_inv_covs` y `tensor_means` y explicar paso a paso cómo es que `TensorizedQDA` llega a predecir lo mismo que `QDA`.**
+    
+    Los shapes de los tensores son: 
+    * `tensor_inv_covs`: $(k, p, p)$
+    * `tensor_means`: $(k, p, 1)$
+  
+    La predicción se realiza de forma equivalente porque: 
 
 ### 2) Optimización
 
@@ -24,23 +33,22 @@ Debido a la forma cuadrática de QDA, no se puede predecir para $n$ observacione
 3. Implementar el modelo `FasterQDA` (se recomienda heredarlo de `TensorizedQDA`) de manera de eliminar el ciclo for en el método predict.
 4. Mostrar dónde aparece la mencionada matriz de $n \times n$, donde $n$ es la cantidad de observaciones a predecir.
 5. Demostrar que
+
 $$
 diag(A \cdot B) = \sum_{cols} A \odot B^T = np.sum(A \odot B^T, axis=1)
-$$ es decir, que se puede "esquivar" la matriz de $n \times n$ usando matrices de $n \times p$. También se puede usar, de forma equivalente,
+$$
+es decir, que se puede "esquivar" la matriz de $n \times n$ usando matrices de $n \times p$. 
+
+También se puede usar, de forma equivalente,
 $$
 np.sum(A^T \odot B, axis=0).T
 $$
 queda a preferencia del alumno cuál usar.
+
 6. Utilizar la propiedad antes demostrada para reimplementar la predicción del modelo `FasterQDA` de forma eficiente en un nuevo modelo `EfficientQDA`.
 7. Comparar la performance de las 4 variantes de QDA implementadas hasta ahora (no Cholesky) ¿Qué se observa? A modo de opinión ¿Se condice con lo esperado?
 
-## Cholesky
 
-Hasta ahora todos los esfuerzos fueron enfocados en realizar una predicción más rápida. Los tiempos de entrenamiento (teóricos al menos) siguen siendo los mismos o hasta (minúsculamente) peores, dado que todas las mejoras siguen llamando al método `_fit_params` original de `QDA`.
-
-La descomposición/factorización de [Cholesky](https://en.wikipedia.org/wiki/Cholesky_decomposition#Statement) permite factorizar una matriz definida positiva $A = LL^T$ donde $L$ es una matriz triangular inferior. En particular, si bien se asume que $p \ll n$, invertir la matriz de covarianzas $\Sigma$ para cada clase impone un cuello de botella que podría alivianarse. Teniendo en cuenta que las matrices de covarianza son simétricas y salvo degeneración, definidas positivas, Cholesky como mínimo debería permitir invertir la matriz más rápido.
-
-*Nota: observar que calcular* $A^{-1}b$ *equivale a resolver el sistema* $Ax=b$.
 
 ### 3) Diferencias entre implementaciones de `QDA_Chol`
 
@@ -54,3 +62,52 @@ La descomposición/factorización de [Cholesky](https://en.wikipedia.org/wiki/Ch
 12. Implementar el modelo `TensorizedChol` paralelizando sobre clases/observaciones según corresponda. Se recomienda heredarlo de alguna de las implementaciones de `QDA_Chol`, aunque la elección de cuál de ellas queda a cargo del alumno según lo observado en los benchmarks de puntos anteriores.
 13. Implementar el modelo `EfficientChol` combinando los insights de `EfficientQDA` y `TensorizedChol`. Si se desea, se puede implementar `FasterChol` como ayuda, pero no se contempla para el punto.
 13. Comparar la performance de las 9 variantes de QDA implementadas ¿Qué se observa? A modo de opinión ¿Se condice con lo esperado?
+
+### Adicional: Preguntas técnicas embebidas en código: 
+
+#### Base code
+
+Q3. *¿Para que sirve bincount?*
+
+    def _estimate_a_priori(self, y):
+    a_priori = np.bincount(y.flatten().astype(int)) / y.size
+    # Q3: para que sirve bincount?
+    return np.log(a_priori)
+
+Bin count sirve precisamente para hacer el calculo de las probabilidades a priori tomando las frecuencias absolutas de cada clase y dividiendolas por su total para tener la frecuencia relativa. 
+
+Q4. *¿Por que el _fit_params va al final? no se puede mover a, por ejemplo, antes de la priori?*
+
+    def fit(self, X, y, a_priori=None):
+    # if it's needed, estimate a priori probabilities
+    self.log_a_priori = self._estimate_a_priori(y) if a_priori is None else np.log(a_priori)
+
+    # now that everything else is in place, estimate all needed parameters for given model
+    self._fit_params(X, y)
+    # Q4: por que el _fit_params va al final? no se puede mover a, por ejemplo, antes de la priori?
+
+..
+
+#### QDA
+
+    def _fit_params(self, X, y):
+    # estimate each covariance matrix
+    self.inv_covs = [LA.inv(np.cov(X[:,y.flatten()==idx], bias=True))
+                      for idx in range(len(self.log_a_priori))]
+    # Q5: por que hace falta el flatten y no se puede directamente X[:,y==idx]?
+    # Q6: por que se usa bias=True en vez del default bias=False?
+    self.means = [X[:,y.flatten()==idx].mean(axis=1, keepdims=True)
+                  for idx in range(len(self.log_a_priori))]
+    # Q7: que hace axis=1? por que no axis=0?
+
+Q5. *¿por que hace falta el flatten y no se puede directamente X[:,y==idx]?*
+
+..
+
+Q6. *¿por que se usa bias=True en vez del default bias=False?
+
+..
+
+Q7: *¿que hace axis=1? por que no axis=0?*
+
+..
