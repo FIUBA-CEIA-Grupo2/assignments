@@ -2,6 +2,17 @@
 
 ### Descripción de la Implementación
 
+Este notebook implementa un modelo de regresión para predecir el valor medio de viviendas en distritos de California, utilizando el dataset `California Housing` provisto por *Scikit-learn*.
+
+El desarrollo se encuentra completamente contenido en la notebook `notebooks/california_housing_regression.ipynb`, organizada en secciones que permiten seguir el flujo de trabajo desde la carga de datos hasta la evaluación final del modelo.
+
+Las principales características de esta implementación son:
+
+- **Carga y preprocesamiento de datos** mediante `pandas` y `scikit-learn`.  
+- **Análisis exploratorio de datos (EDA)** con visualizaciones y estadísticas descriptivas.  
+- **Entrenamiento de modelos de regresión** y comparación de su rendimiento.  
+- **Evaluación del modelo** usando métricas como *MAE*, *MSE* y *R²*.  
+- **Visualización de resultados** para interpretar la relación entre variables y el valor predicho.  
 
 
 ### Preguntas a Resolver
