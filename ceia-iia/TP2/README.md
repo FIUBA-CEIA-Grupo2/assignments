@@ -13,7 +13,7 @@
 
 ### Resolución
 
-[Explicación detallada de la solución implementada](docs/TP2.md)
+[Explicación detallada de la solución implementada](docs/resolucion.md)
 
 ### Como correrlo
 
