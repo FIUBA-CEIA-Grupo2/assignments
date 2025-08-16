@@ -31,7 +31,11 @@ En esta sección nos vamos a ocupar de hacer que el modelo sea más rápido para
 Debido a la forma cuadrática de QDA, no se puede predecir para $n$ observaciones en una sola pasada (utilizar $X \in \mathbb{R}^{p \times n}$ en vez de $x \in \mathbb{R}^p$) sin pasar por una matriz de $n \times n$ en donde se computan todas las interacciones entre observaciones. Se puede acceder al resultado recuperando sólo la diagonal de dicha matriz, pero resulta ineficiente en tiempo y (especialmente) en memoria. Aún así, es *posible* que el modelo funcione más rápido.
 
 3. Implementar el modelo `FasterQDA` (se recomienda heredarlo de `TensorizedQDA`) de manera de eliminar el ciclo for en el método predict.
+   Ver en [notebook](../notebooks/AMIA_2025_TP1.ipynb)
 4. Mostrar dónde aparece la mencionada matriz de $n \times n$, donde $n$ es la cantidad de observaciones a predecir.
+
+![alt text](../img/img_amia_tp1_1.png)
+
 5. Demostrar que
 
 $$
@@ -44,6 +48,8 @@ $$
 np.sum(A^T \odot B, axis=0).T
 $$
 queda a preferencia del alumno cuál usar.
+
+[Demostración](../docs/demostracion_amia_tp1_ej5.pdf)
 
 6. Utilizar la propiedad antes demostrada para reimplementar la predicción del modelo `FasterQDA` de forma eficiente en un nuevo modelo `EfficientQDA`.
 7. Comparar la performance de las 4 variantes de QDA implementadas hasta ahora (no Cholesky) ¿Qué se observa? A modo de opinión ¿Se condice con lo esperado?
