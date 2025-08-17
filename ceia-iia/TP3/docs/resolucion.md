@@ -134,8 +134,6 @@ De acuerdo a los resultados obtenidos:
 - Según **precisión**, el mejor modelo es el **Naive Bayes normalizado** (0.93).  
 - La **Regresión Logística** queda en un punto intermedio, con buena precisión (0.89) y un recall similar al NB normalizado (0.79).  
 
----
-
 2. **¿Cómo se relacionan estas métricas con los errores analizados en el punto anterior?**
 
 - **Naive Bayes clásico** logra el **mayor recall (0.96)**, lo que significa que detecta casi todos los correos SPAM, pero a costa de una **precisión más baja (0.77)**. Esto coincide con lo observado en las matrices de confusión: comete más **Falsos Positivos (FP)**, clasificando correos legítimos como SPAM.  
