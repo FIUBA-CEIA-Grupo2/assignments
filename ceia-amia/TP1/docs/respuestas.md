@@ -54,6 +54,14 @@ queda a preferencia del alumno cuál usar.
 6. Utilizar la propiedad antes demostrada para reimplementar la predicción del modelo `FasterQDA` de forma eficiente en un nuevo modelo `EfficientQDA`.
 7. Comparar la performance de las 4 variantes de QDA implementadas hasta ahora (no Cholesky) ¿Qué se observa? A modo de opinión ¿Se condice con lo esperado?
 
+![alttext](../img/img_amia_tp1_2_comparison.png)
+
+Podemos ver en estos gráficos que en Train no se ve diferencia alguna entre las implementaciones. En Test por otro lado vemos tiempos mucho mas grandes en el `QDA` baseline e incluso el `TensorizedQDA`, con el mas corto siendo el `EfficientQDA`. 
+
+En términos de uso de memoria `FasterQDA` es, considerablemente, el más problemático debido a su cálculo de matrices nxn. Esto se ve bastante amortiguado con la implementación realizada en `EfficientQDA`. 
+
+Por último, en terminos de accuracy, los 4 modelos se mueven dentro de un rango muy similar, por lo que no se destacan grandes diferencias en esto. 
+
 
 
 ### 3) Diferencias entre implementaciones de `QDA_Chol`
