@@ -52,13 +52,26 @@ Las principales características de esta implementación son:
 
 Si, se detecta que las palabras `you`, `your` y `will` se encuentran en el top 10 de frecuencia tanto en correos SPAM como en NO SPAM.
 
-| # | feature       | total_frequency_in_spam | total_frequency_in_ham |
-|---|---------------|-------------------------|------------------------|
-| 0 | word_freq_you | 4105599                 | 3541702                |
-| 1 | word_freq_your| 2502597                 | 1223098                |
-| 2 | word_freq_will| 997100                  | 1495268                |
+| # | feature        | total_frequency_in_spam | total_frequency_in_ham |
+|---|----------------|-------------------------|------------------------|
+| 0 | word_freq_you  | 4105599                 | 3541702                |
+| 1 | word_freq_your | 2502597                 | 1223098                |
+| 2 | word_freq_will | 997100                  | 1495268                |
 
 2. **¿Alguna resulta llamativa?**
+
+Sí, al analizar los términos se observan patrones interesantes:
+
+- En **SPAM** aparecen palabras directamente asociadas a mensajes comerciales o de engaño, como `free`, `business`, `our`, así como el símbolo `!`, que suele utilizarse para llamar la atención en títulos de ofertas o promociones.  
+- En **NO SPAM (ham)** destacan términos vinculados al ámbito corporativo y académico, como `george`, `hp`, `hpl`, `edu`, `meeting`, y `address`. Esto sugiere que gran parte de los correos legítimos en el dataset provienen de un contexto empresarial o institucional.  
+- También resulta llamativo que palabras muy genéricas como `you`, `your` y `will` sean frecuentes en ambas clases. Esto indica que por sí solas no son buenos discriminadores, y que el modelo debe apoyarse en combinaciones de atributos para clasificar correctamente.
+
+Además, la siguiente visualización (pairplot) permite observar cómo se distribuyen algunas de las palabras más frecuentes según la clase. 
+Se aprecia, acorde a lo explicado anteriormente, qué términos como `you`, `your` y `will` aparecen tanto en correos SPAM como en NO SPAM, lo que explica su poca capacidad de discriminación individual. 
+Por el contrario, la palabra `george` está fuertemente asociada a correos legítimos, mientras que `free` se concentra en correos SPAM. 
+Este análisis gráfico refuerza la importancia de utilizar un conjunto amplio de atributos en lugar de depender de palabras aisladas.
+
+![pairplot.png](../img/pairplot.png)
 
 #### 2. Separe el conjunto de datos en un conjunto de entrenamiento (70%) y uno de prueba (30%).
 Ejecutado en código en notebook.
@@ -170,6 +183,8 @@ Los valores obtenidos para el Área Bajo la Curva (AUC) fueron:
 - El **Naive Bayes clásico** obtiene un AUC aceptable (0.89), lo que indica un rendimiento razonable, aunque claramente inferior a los otros dos modelos.  
 - La **Regresión Logística** mejora notablemente la capacidad discriminativa, alcanzando un AUC de 0.94, lo que refleja un buen balance entre tasa de verdaderos positivos y falsos positivos en distintos umbrales.  
 - El **Naive Bayes normalizado** es el mejor de los tres, con un AUC de 0.96, lo que significa que presenta la mayor capacidad para separar correos SPAM de correos legítimos.  
+
+La notable mejora de Naive Bayes al normalizar los datos se explica porque el reescalado corrige el desbalance en la contribución de las variables, ajustando mejor la estimación de las probabilidades condicionales. De esta manera, el modelo deja de estar dominado por unas pocas palabras muy frecuentes y logra un rendimiento más equilibrado, al punto de superar incluso a la regresión logística en capacidad discriminativa global (AUC).
 
 **Conclusión:**  
 El análisis de las curvas ROC y los valores de AUC confirma los hallazgos de las métricas previas: el **Naive Bayes normalizado** es el modelo más robusto y con mejor desempeño global. Su mayor AUC indica que, sin importar el umbral elegido, ofrece una capacidad de discriminación superior, consolidándose como el modelo más adecuado para la tarea de detección de SPAM.
