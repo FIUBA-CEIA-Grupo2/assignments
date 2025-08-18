@@ -1,7 +1,7 @@
 [project]
 name = "tp2"
 version = "0.1.0"
-description = "Add your description here"
+description = "Trabajo Práctico 2 de Introducción a la Inteligencia Artificial - Modelo de regresión para predecir valores medios de viviendas en California"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
