@@ -2,7 +2,7 @@
 
 ### Descripción de la Implementación
 
-Este notebook implementa un modelo de Regresión Logística y un modelo Naive Bayes para clasificar si un correo es SPAM o NO SPAM, utilizando el dataset [spambase](../datasets/spambase.csv).
+Este notebook implementa un modelo de Regresión Logística y un modelo Naive Bayes (con y sin normalización) para clasificar si un correo es SPAM o NO SPAM, utilizando el dataset [spambase](../datasets/spambase.csv).
 
 El desarrollo se encuentra completamente contenido en la notebook [spam_detection_solution.ipynb](../notebooks/spam_detection_solution.ipynb), organizada en secciones que permiten seguir el flujo de trabajo desde la carga de datos hasta la evaluación final de los modelos.
 
@@ -10,7 +10,7 @@ Las principales características de esta implementación son:
 
 - **Carga y preprocesamiento de datos** mediante `pandas` y `scikit-learn`.  
 - **Análisis exploratorio de datos (EDA)** con visualizaciones y estadísticas descriptivas.  
-- **Entrenamiento de modelos de regresión logística y Naive Bayes** y comparación de su rendimiento.  
+- **Entrenamiento de modelos de regresión logística y Naive Bayes (con y sin normalización)** y comparación de su rendimiento.  
 - **Evaluación del modelo** mediante la *Matriz de confusión*, y usando métricas como *Sensibilidad*, *Especificidad*, *Exactitud Balanceada*, *Precisión*, *Recall* y *puntaje F1*.  
 - **Visualización de resultados** Visualización de la *Curva ROC* y *AUC* para cada modelo. 
 
@@ -97,7 +97,7 @@ realmente eran 0. Este error se llama de tipo I.
 * Falso negativo (FN): Son las observaciones que clasificamos como 0 y que
 realmente eran 1. Este error se llama de tipo II
 
-**Naive Bayes**
+**Naive Bayes (sin normalizar)**
 
 ![matriz_confusion_naive_bayes.png](../img/matriz_confusion_naive_bayes.png)
 
@@ -130,7 +130,7 @@ En cambio, si bien los falsos negativos permiten que cierto SPAM llegue a la ban
 
 De acuerdo a los resultados obtenidos:
 
-- **Naive Bayes**
+- **Naive Bayes (sin normalizar)**
   - Precisión (SPAM): **0.77**
   - Recall (SPAM): **0.96**
 
@@ -143,18 +143,18 @@ De acuerdo a los resultados obtenidos:
   - Recall (SPAM): **0.79**
 
 **Comparación:**
-- Según **recuperación (recall)**, el mejor modelo es el **Naive Bayes clásico** (0.96).  
+- Según **recuperación (recall)**, el mejor modelo es el **Naive Bayes (sin normalizar)** (0.96).  
 - Según **precisión**, el mejor modelo es el **Naive Bayes normalizado** (0.93).  
 - La **Regresión Logística** queda en un punto intermedio, con buena precisión (0.89) y un recall similar al NB normalizado (0.79).  
 
 2. **¿Cómo se relacionan estas métricas con los errores analizados en el punto anterior?**
 
-- **Naive Bayes clásico** logra el **mayor recall (0.96)**, lo que significa que detecta casi todos los correos SPAM, pero a costa de una **precisión más baja (0.77)**. Esto coincide con lo observado en las matrices de confusión: comete más **Falsos Positivos (FP)**, clasificando correos legítimos como SPAM.  
+- **Naive Bayes (sin normalizar)** logra el **mayor recall (0.96)**, lo que significa que detecta casi todos los correos SPAM, pero a costa de una **precisión más baja (0.77)**. Esto coincide con lo observado en las matrices de confusión: comete más **Falsos Positivos (FP)**, clasificando correos legítimos como SPAM.  
 
 - **Regresión Logística** y **Naive Bayes normalizado** muestran un **recall menor (0.79)**, es decir, se les escapan más correos SPAM (**Falsos Negativos, FN**). Sin embargo, mejoran la **precisión** (0.89 y 0.93 respectivamente), lo que significa que los correos que marcan como SPAM son más confiables.  
 
 En conclusión, las métricas reflejan el mismo trade-off discutido anteriormente:  
-- **Naive Bayes clásico** prioriza la **recuperación de SPAM** (minimiza FN), sacrificando confianza en los positivos (más FP).  
+- **Naive Bayes (sin normalizar)** prioriza la **recuperación de SPAM** (minimiza FN), sacrificando confianza en los positivos (más FP).  
 - **Naive Bayes normalizado** prioriza la **precisión** (minimiza FP), sacrificando recall (más FN).  
 - **Regresión Logística** se ubica entre ambos, ofreciendo un equilibrio aceptable pero sin destacar como el mejor en ninguna de las métricas principales.  
 
@@ -163,7 +163,7 @@ El análisis de las métricas puntuales se complementa con las curvas Precision�
 ![precision-recall_curves.png](../img/precision-recall_curves.png)
 
 Estas curvas muestran el comportamiento de cada modelo al variar el umbral de decisión. 
-Se observa que el Naive Bayes clásico logra altos niveles de recall, aunque con una caída pronunciada de precisión, mientras que la Regresión Logística mantiene un equilibrio más estable entre ambas métricas. 
+Se observa que el Naive Bayes (sin normalizar) logra altos niveles de recall, aunque con una caída pronunciada de precisión, mientras que la Regresión Logística mantiene un equilibrio más estable entre ambas métricas. 
 Por su parte, el Naive Bayes normalizado domina en la mayor parte del rango, presentando la mejor relación global entre precisión y recall. 
 Esto confirma que, ajustando adecuadamente el umbral, el Naive Bayes normalizado puede ser el modelo más robusto en términos de desempeño combinado.
 
@@ -174,13 +174,13 @@ Esto confirma que, ajustando adecuadamente el umbral, el Naive Bayes normalizado
 
 Los valores obtenidos para el Área Bajo la Curva (AUC) fueron:
 
-- **Naive Bayes clásico:** 0.8903  
+- **Naive Bayes (sin normalizar):** 0.8903  
 - **Regresión Logística:** 0.9429  
 - **Naive Bayes normalizado:** 0.9570  
 
 **Análisis:**
 
-- El **Naive Bayes clásico** obtiene un AUC aceptable (0.89), lo que indica un rendimiento razonable, aunque claramente inferior a los otros dos modelos.  
+- El **Naive Bayes (sin normalizar)** obtiene un AUC aceptable (0.89), lo que indica un rendimiento razonable, aunque claramente inferior a los otros dos modelos.  
 - La **Regresión Logística** mejora notablemente la capacidad discriminativa, alcanzando un AUC de 0.94, lo que refleja un buen balance entre tasa de verdaderos positivos y falsos positivos en distintos umbrales.  
 - El **Naive Bayes normalizado** es el mejor de los tres, con un AUC de 0.96, lo que significa que presenta la mayor capacidad para separar correos SPAM de correos legítimos.  
 
@@ -188,3 +188,10 @@ La notable mejora de Naive Bayes al normalizar los datos se explica porque el re
 
 **Conclusión:**  
 El análisis de las curvas ROC y los valores de AUC confirma los hallazgos de las métricas previas: el **Naive Bayes normalizado** es el modelo más robusto y con mejor desempeño global. Su mayor AUC indica que, sin importar el umbral elegido, ofrece una capacidad de discriminación superior, consolidándose como el modelo más adecuado para la tarea de detección de SPAM.
+
+
+### Conclusión General
+
+A lo largo de este trabajo se implementaron y evaluaron tres enfoques distintos para la detección de correos SPAM: Naive Bayes sin normalizar, Regresión Logística y Naive Bayes con datos normalizados. Los resultados evidencian que cada modelo prioriza de manera diferente los tipos de error: el Naive Bayes clásico maximiza la recuperación de SPAM (alto recall) pero con un costo elevado en falsos positivos; la Regresión Logística ofrece un mayor control de falsos positivos y mejor especificidad, aunque deja pasar más SPAM a la bandeja de entrada (falsos negativos); y el Naive Bayes normalizado logra el mejor equilibrio global entre precisión y recall, alcanzando además el mayor valor de AUC en las curvas ROC.
+
+Estos hallazgos muestran la relevancia del preprocesamiento de los datos en el desempeño de los modelos y refuerzan la necesidad de ajustar los umbrales de decisión en función de la política de errores que se desee priorizar. En este caso, el Naive Bayes normalizado se consolida como el modelo más robusto y adecuado para la tarea planteada, combinando buena capacidad de discriminación y un balance favorable entre precisión y recall.
