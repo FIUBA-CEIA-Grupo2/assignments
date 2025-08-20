@@ -55,7 +55,7 @@ Debido a la forma cuadrática de QDA, no se puede predecir para $n$ observacione
 
 6. **Utilizar la propiedad antes demostrada para reimplementar la predicción del modelo `FasterQDA` de forma eficiente en un nuevo modelo `EfficientQDA`.**
 
-    Resuelto en notebook.
+    Resuelto en [notebook](../notebooks/AMIA_2025_TP1.ipynb).
 
 7. **Comparar la performance de las 4 variantes de QDA implementadas hasta ahora (no Cholesky) ¿Qué se observa? A modo de opinión ¿Se condice con lo esperado?**
 
@@ -110,7 +110,21 @@ Debido a la forma cuadrática de QDA, no se puede predecir para $n$ observacione
 
 10. ¿Cuáles son las diferencias entre `QDA_Chol1`, `QDA_Chol2` y `QDA_Chol3`?
 
+    En la forma que resuelven el Cálculo Matricial:
 
+    - `QDA_Chol1` calcula la descomposición de Cholesky y luego invierte explícitamente la matriz usando LA.inv() de NumPy.
+    - `QDA_Chol2` almacena el factor de Cholesky L directamente sin inversión
+    - `QDA_Chol3` utiliza la función dtrtri de LAPACK para calcular la inversa del factor triangular de Cholesky, lo que es numéricamente más estable y eficiente que la inversión general de matrices.
+
+    En la forma que resuelven el Cálculo de Predicción:
+
+    - `QDA_Chol1` y `QDA_Chol3` ambos utilizan multiplicación matricial con el factor inverso de Cholesky precalculado.
+    - `QDA_Chol2` utiliza *solve_triangular* para resolver el sistema `Ly = unbiased_x` en lugar de calcular la inversa explícitamente. El signo del término del logaritmo del determinante es negativo porque está usando L en lugar de L⁻¹.
+
+    Conclusión:
+    - `QDA_Chol1`: Implementación más directa pero menos eficiente debido a la inversión explícita de matrices generales.
+    - `QDA_Chol2`: Evita la inversión explícita de matrices mediante el uso de *solve_triangular*, que es numéricamente más estable y eficiente para matrices triangulares, por lo que probablemente sea el más eficiente en memoria ya que no almacena matrices invertidas.
+    - `QDA_Chol3`: Utiliza la función especializada dtrtri de LAPACK para la inversión de matrices triangulares, que resulta ser más eficiente que la inversión general de matrices pero aún precalcula la inversa (a diferencia de QDA_Chol2). Probablemente ofrezca el mejor equilibrio entre velocidad y estabilidad numérica.
 
 11. Comparar la performance de las 7 variantes de QDA implementadas hasta ahora ¿Qué se observa?¿Hay alguna de las implementaciones de `QDA_Chol` que sea claramente mejor que las demás?¿Alguna que sea peor?
 
