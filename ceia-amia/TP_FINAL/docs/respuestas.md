@@ -90,6 +90,22 @@ Debido a la forma cuadrática de QDA, no se puede predecir para $n$ observacione
 
 9.  Explicar las diferencias entre `QDA_Chol1`y `QDA` y cómo `QDA_Chol1` llega, paso a paso, hasta las predicciones.
 
+    La diferencia entre ambos esta en:
+    
+    - En el método `_fit_params`: al calcular la matriz de covarianzas, se calcula utilizando Cholesky y solo tomando la matriz inferior de esta (lower=true). 
+    
+            LA.inv(cholesky(np.cov(X[:,y.flatten()==idx], bias=True), lower=True))
+    - En el método `_predict_log_conditionals`: como ya utilizamos Cholesky y tenemos la matriz inferior de la matriz de covarianzas (L) invertida (L_inv), podemos utilizar esto para reemplazar 
+
+            np.log(L_inv.diagonal().prod()) -0.5 * (y**2).sum()
+
+    $$
+    y = L^{-1}(x-\mu), \qquad
+    (x-\mu)^\top \Sigma^{-1} (x-\mu) = \|y\|_2^2.
+    $$
+
+    
+
 
 
 10. ¿Cuáles son las diferencias entre `QDA_Chol1`, `QDA_Chol2` y `QDA_Chol3`?
