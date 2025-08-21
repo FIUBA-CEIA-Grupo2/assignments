@@ -24,7 +24,17 @@ En esta sección nos vamos a ocupar de hacer que el modelo sea más rápido para
     * `tensor_inv_covs`: $(k, p, p)$
     * `tensor_means`: $(k, p, 1)$
   
-    La predicción se realiza de forma equivalente porque: 
+    La predicción se realiza de forma equivalente porque:
+    
+    1. Durante el entrenamiento, `TensorizedQDA` apila las matrices de covarianza invertidas y las medias en tensores usando `np.stack`, creando una dimensión adicional para las `k` clases.
+    
+    2. En la predicción, para cada observación `x`, calcula:
+       - Resta las medias de cada clase: `unbiased_x = x - self.tensor_means` (shape: `(k, p, 1)`)
+       - Transpone para obtener la forma adecuada: `unbiased_x.transpose(0,2,1)` (shape: `(k, 1, p)`)
+       - Calcula el producto matricial para todas las clases simultáneamente: `inner_prod = unbiased_x.transpose(0,2,1) @ self.tensor_inv_cov @ unbiased_x` (shape: `(k, 1, 1)`)
+       - Calcula `0.5*np.log(LA.det(self.tensor_inv_cov)) - 0.5 * inner_prod.flatten()` para obtener los logaritmos de las probabilidades condicionales
+    
+    3. Finalmente, suma estos valores con los logaritmos de las probabilidades a priori y selecciona la clase con mayor probabilidad posterior, exactamente igual que `QDA` pero calculando todas las clases en paralelo.
 
 ### 2) Optimización
 
@@ -38,7 +48,7 @@ Debido a la forma cuadrática de QDA, no se puede predecir para $n$ observacione
 
 ![alt text](../img/img_amia_tp1_1.png)
 
-5. Demostrar que
+5. **Demostrar que:**
 
     $$
     diag(A \cdot B) = \sum_{cols} A \odot B^T = np.sum(A \odot B^T, axis=1)
