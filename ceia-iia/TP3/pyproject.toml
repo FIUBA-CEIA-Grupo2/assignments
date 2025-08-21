@@ -1,7 +1,7 @@
 [project]
-name = "tp2"
+name = "tp3"
 version = "0.1.0"
-description = "Trabajo Práctico 2 de Introducción a la Inteligencia Artificial - Modelo de regresión para predecir valores medios de viviendas en California"
+description = "Trabajo Práctico 3 de Introducción a la Inteligencia Artificial - Sistema de detección de SPAM utilizando procesamiento de lenguaje natural y aprendizaje automático"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
