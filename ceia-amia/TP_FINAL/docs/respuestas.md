@@ -138,8 +138,18 @@ Debido a la forma cuadrática de QDA, no se puede predecir para $n$ observacione
 
 11. Comparar la performance de las 7 variantes de QDA implementadas hasta ahora ¿Qué se observa?¿Hay alguna de las implementaciones de `QDA_Chol` que sea claramente mejor que las demás?¿Alguna que sea peor?
 
+    ![alt_text](../img/img_amia_tp1_3_comparison_QDA.png)
 
+    En base a las ejecuciones realizadas notamos los siguientes puntos: 
 
+    - En Tiempo:
+      - Train: No parece haber grandes mejoras respecto al resto de modelos. De las implementaciones QDA_Chol, la mejor parece ser `QDA_Chol2`.
+      - Test: Implementaciones tensorizadas (`TensorizedQDA`, `FasterQDA`, `EfficientQDA`) siguen siendo considerablemente superiores en tiempo consumido. 
+    - En memoria: 
+      - Train: Todos los modelos se manejan en el mismo rango y con desvios estandar similares. 
+      - Test: Se mantiene la tendencia de consumo de memoria exponencialmente superior en ``FasterQDA`` y ``EfficientQDA``. 
+    
+    Con estos datos, podemos decir que `QDA_Chol3` presenta resultados peores al resto de iteraciones basadas en Cholesky. En cambio, para avanzar con el resto del proyecto, se elige `QDA_Chol2` como base para tensorizar y eficientizar esta debido a sus resultados superiores. 
 
 ### 4) Optimización
 
