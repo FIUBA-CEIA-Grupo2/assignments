@@ -44,7 +44,7 @@ Debido a la forma cuadrática de QDA, no se puede predecir para $n$ observacione
    Ver en [notebook](../notebooks/AMIA_2025_TP1.ipynb)
 4. **Mostrar dónde aparece la mencionada matriz de $n \times n$, donde $n$ es la cantidad de observaciones a predecir.**
 
-![alt text](../img/img_amia_tp1_1.png)
+    ![alt text](../img/img_amia_tp1_1.png)
 
 5. **Demostrar que:**
 

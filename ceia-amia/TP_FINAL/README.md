@@ -7,8 +7,6 @@
 - Maira Daniela Ferrari
 - Gaspar Rivollier 
 
-### Enunciado
-
 ### Resolución
 
 [Explicación detallada de la solución implementada](docs/respuestas.md)
