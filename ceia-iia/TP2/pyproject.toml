@@ -1,0 +1,14 @@
+[project]
+name = "tp2"
+version = "0.1.0"
+description = "Trabajo Práctico 2 de Introducción a la Inteligencia Artificial - Modelo de regresión para predecir valores medios de viviendas en California"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "jupyter>=1.1.1",
+    "matplotlib>=3.10.5",
+    "numpy>=2.3.2",
+    "pandas>=2.3.1",
+    "scikit-learn>=1.7.1",
+    "seaborn>=0.13.2",
+]

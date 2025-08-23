@@ -6,8 +6,6 @@
 * $n$ la cantidad de observaciones
 * $p$ la cantidad de features/variables/predictores
 
-**Sugerencia:** combinaciones adecuadas de `transpose`, `stack`, `reshape` y, ocasionalmente, `flatten` y `diagonal` suele ser más que suficiente. Se recomienda *fuertemente* explorar la dimensionalidad de cada elemento antes de implementar las clases.
-
 ## Tensorización
 
 En esta sección nos vamos a ocupar de hacer que el modelo sea más rápido para generar predicciones, observando que incurre en un doble `for` dado que predice en forma individual un escalar para cada observación, para cada clase. Paralelizar ambos vía tensorización suena como una gran vía de mejora de tiempos.
@@ -46,7 +44,7 @@ Debido a la forma cuadrática de QDA, no se puede predecir para $n$ observacione
    Ver en [notebook](../notebooks/AMIA_2025_TP1.ipynb)
 4. **Mostrar dónde aparece la mencionada matriz de $n \times n$, donde $n$ es la cantidad de observaciones a predecir.**
 
-![alt text](../img/img_amia_tp1_1.png)
+    ![alt text](../img/img_amia_tp1_1.png)
 
 5. **Demostrar que:**
 
@@ -68,6 +66,12 @@ Debido a la forma cuadrática de QDA, no se puede predecir para $n$ observacione
     Resuelto en [notebook](../notebooks/AMIA_2025_TP1.ipynb).
 
 7. **Comparar la performance de las 4 variantes de QDA implementadas hasta ahora (no Cholesky) ¿Qué se observa? A modo de opinión ¿Se condice con lo esperado?**
+
+    Resultados con:
+
+        Python 3.12.7
+        numpy==2.0.2
+        scipy==1.16.1
 
     ![alttext](../img/img_amia_tp1_2_comparison.png)
 
@@ -98,7 +102,7 @@ Debido a la forma cuadrática de QDA, no se puede predecir para $n$ observacione
 
     Esto es útil porque evitamos calcular la matriz inversa de covarianzas explicitamente. 
 
-9.  Explicar las diferencias entre `QDA_Chol1`y `QDA` y cómo `QDA_Chol1` llega, paso a paso, hasta las predicciones.
+9.  **Explicar las diferencias entre `QDA_Chol1`y `QDA` y cómo `QDA_Chol1` llega, paso a paso, hasta las predicciones.**
 
     La diferencia entre ambos esta en:
     
@@ -118,7 +122,7 @@ Debido a la forma cuadrática de QDA, no se puede predecir para $n$ observacione
 
 
 
-10. ¿Cuáles son las diferencias entre `QDA_Chol1`, `QDA_Chol2` y `QDA_Chol3`?
+10. **¿Cuáles son las diferencias entre `QDA_Chol1`, `QDA_Chol2` y `QDA_Chol3`?**
 
     En la forma que resuelven el Cálculo Matricial:
 
@@ -136,7 +140,15 @@ Debido a la forma cuadrática de QDA, no se puede predecir para $n$ observacione
     - `QDA_Chol2`: Evita la inversión explícita de matrices mediante el uso de *solve_triangular*, que es numéricamente más estable y eficiente para matrices triangulares, por lo que probablemente sea el más eficiente en memoria ya que no almacena matrices invertidas.
     - `QDA_Chol3`: Utiliza la función especializada dtrtri de LAPACK para la inversión de matrices triangulares, que resulta ser más eficiente que la inversión general de matrices pero aún precalcula la inversa (a diferencia de QDA_Chol2). Probablemente ofrezca el mejor equilibrio entre velocidad y estabilidad numérica.
 
-11. Comparar la performance de las 7 variantes de QDA implementadas hasta ahora ¿Qué se observa?¿Hay alguna de las implementaciones de `QDA_Chol` que sea claramente mejor que las demás?¿Alguna que sea peor?
+11. **Comparar la performance de las 7 variantes de QDA implementadas hasta ahora ¿Qué se observa?¿Hay alguna de las implementaciones de `QDA_Chol` que sea claramente mejor que las demás?¿Alguna que sea peor?**
+
+    Resultados con
+
+        Python 3.12.11
+        numpy==2.0.2
+        scipy==1.16.1
+
+    ![alt_text](../img/img_amia_tp1_4_comparison_QDA_results.png)
 
     ![alt_text](../img/img_amia_tp1_3_comparison_QDA.png)
 
@@ -153,6 +165,41 @@ Debido a la forma cuadrática de QDA, no se puede predecir para $n$ observacione
 
 ### 4) Optimización
 
-12. Implementar el modelo `TensorizedChol` paralelizando sobre clases/observaciones según corresponda. Se recomienda heredarlo de alguna de las implementaciones de `QDA_Chol`, aunque la elección de cuál de ellas queda a cargo del alumno según lo observado en los benchmarks de puntos anteriores.
-13. Implementar el modelo `EfficientChol` combinando los insights de `EfficientQDA` y `TensorizedChol`. Si se desea, se puede implementar `FasterChol` como ayuda, pero no se contempla para el punto.
-14. Comparar la performance de las 9 variantes de QDA implementadas ¿Qué se observa? A modo de opinión ¿Se condice con lo esperado?
+12. **Implementar el modelo `TensorizedChol` paralelizando sobre clases/observaciones según corresponda. Se recomienda heredarlo de alguna de las implementaciones de `QDA_Chol`, aunque la elección de cuál de ellas queda a cargo del alumno según lo observado en los benchmarks de puntos anteriores.**
+
+    Ver en [notebook](../notebooks/AMIA_2025_TP1.ipynb). --> Esta implementación está tensorizada parcialmente ya que el método `cholensk()` de SciPy aparentemente no admite tensores, por lo que habría que utilizar otras librerías como Torch. Creo que esto haría que ya no sean comparables los métodos entre si, por lo que se decide tensorizar parcialmente. 
+
+13. **Implementar el modelo `EfficientChol` combinando los insights de `EfficientQDA` y `TensorizedChol`. Si se desea, se puede implementar `FasterChol` como ayuda, pero no se contempla para el punto.**
+
+    Ver en [notebook](../notebooks/AMIA_2025_TP1.ipynb).
+
+14. **Comparar la performance de las 9 variantes de QDA implementadas ¿Qué se observa? A modo de opinión ¿Se condice con lo esperado?**
+
+    Resultados con 
+
+        Python 3.12.7
+        numpy==2.0.2
+        scipy==1.16.1
+
+    ![alt_text](../img/img_amia_tp1_5_final_comparison_results.png)
+
+    ![alt_text](../img/img_amia_tp1_5_final_comparison.png)
+
+    Con estos resultados podemos ver que:
+    - En tiempo:
+      - Para entrenamiento: El método mas eficiente fue ``TensorizedChol``, con ``EfficientChol`` relativamente cerca pero afectado por el resto de su implementación. 
+      - Para test: Se observa que tanto `FasterQDA`, `EfficientQDA` como `EfficientChol` llegan a resultados similares.
+    - En terminos de memoria: 
+      - Para entrenamiento: vemos que tanto ``TensorizedChol`` como ``EfficientChol`` ahora utilizan la memoria para reducir los tiempos de entrenamiento, llegando a niveles similares a los utilizados para test por los metodos tensorizados vistos al comienzo de este trabajo. 
+      - Para test: Notamos como ``EfficientChol`` consume memoria en un rango similar a `EfficientQDA`. 
+
+    Adicionalmente, podemos ver los resultados relativos a ``QDA`` como benchmark:
+
+    ![alt_text](../img/img_amia_tp1_5_final_comparison_benchmark.png)
+
+    Como conclusión, vemos que la última implementación `EfficientChol`, si bien consume mucha memoria logra mezclar las 2 "tácticas" de mejora del modelo de clasificación QDA. Sacrificando un poco su tiempo de entrenamiento pero logrando tiempos de test muy buenos. 
+
+    En terminos de accuracy, todos los modelos se comportaron dentro del rango esperado: similar. 
+
+    
+

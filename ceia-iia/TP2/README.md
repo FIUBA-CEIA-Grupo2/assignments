@@ -1,4 +1,4 @@
-## Introducción a la Inteligencia Artificial - TP1
+## Introducción a la Inteligencia Artificial - TP2
 
 ### Autores
 - Martín Fernando Andres
@@ -17,8 +17,4 @@
 
 ### Como correrlo
 
-El presente proyecto tiene 2 modos de ejecución disponibles:
-
-[Como correr la notebook de Jupiter](notebooks/README.md)
-
-[Como correr el script](scripts/README.md)
+El presente proyecto se ejecuta mediante Jupyter notebooks: [Como correr la notebook de Jupiter](notebooks/README.md)
